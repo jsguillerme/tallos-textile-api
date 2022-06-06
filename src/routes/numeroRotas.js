@@ -4,6 +4,6 @@ import numeroController from "../controllers/numeroController.js";
 const router = express.Router();
 
 router
-    .put("/atualizar/numero", numeroController.atualizarNumero);
+    .put("/", numeroController.atualizarNumero);
 
 export default router;
