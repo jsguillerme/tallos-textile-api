@@ -1,12 +1,13 @@
 class numeroController {
 
     static atualizarNumero = (req, res) => {
-        const numero = req.query.numero;
-        
+        const { cpfCnpj, numero } = req.query
+
         const novoNumero = (numero.replace(/[^0-9]/g, "%2F"));
-        
-        res.status(200).send({NumeroAtualizado: novoNumero});
+
+        return novoNumero;
     }
 }
 
-export default numeroController;
+
+export default numeroController

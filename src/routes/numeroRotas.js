@@ -1,9 +1,13 @@
 import express from "express";
-import numeroController from "../controllers/numeroController.js";
+// import numeroController from "../controllers/numeroController.js";
+import geraBoleto from "../controllers/geraBoletoController.js";
+
 
 const router = express.Router();
 
 router
-    .put("/", numeroController.atualizarNumero);
+    .get('/geraBoleto', geraBoleto)
+    // .put("/", numeroController.atualizarNumero)
+
 
 export default router;
