@@ -16,9 +16,10 @@ const geraBoletoController = async (req, res) =>
     } catch (err) {
         return res.status(400).json({error: 'falta o número do documento'})
     }
+    
 
     if(token != "ZjegJFyh2S8Ygl2dKwmOG960QSNHMRqW7mUEruGj"){
-        return res.status(500).json({error: 'Problema de autenticação, verifique o token'})
+        return res.status(403).json({error: 'Problema de autenticação, verifique o token'})
     }
 
     if(!numero){
@@ -30,28 +31,22 @@ const geraBoletoController = async (req, res) =>
     }
 
     await axios
-        .get(`https://txc.portaldocliente.online/api/data-integration/v1/app/txc/bankbill/company/${cpfCnpj}/customer/${cpfCnpj}/document/${numeroNovo}/generate-bankbill`, {
+        .get(`http://txc.portaldocliente.online/api/data-integration/v1/app/txc/bankbill/company/42548082000153/customer/${cpfCnpj}/document/${numeroNovo}/generate-bankbill`, {
             headers: { 'x-api-key': token },
-            params: {'emissao': '10/04/2022'}
+            // params: {'emissao': '10/04/2022'}
         })
         .then(response => {
             logs.push({
-                cliente: cpf,
-                documento: novoNumero,
-                message: response.data,
+                message: response.data
             })
             console.log({
-                cliente: cpf,
-                documento: novoNumero,
                 message: response.data
             })
         })
         .catch(e => {
             logs.push({
-                message: e.response.data,
-                status: e.response.status,
-                documentoEnviado: numeroNovo,
-                clienteEnviado: cpfCnpj
+                message: e.message,
+                // status: e.status
             })
         })
     res.set('X-Robots-Tag', 'noindex');
