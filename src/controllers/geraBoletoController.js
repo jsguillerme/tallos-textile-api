@@ -37,20 +37,41 @@ const geraBoletoController = async (req, res) =>
         })
         .then(response => {
             logs.push({
-                message: response.data
+                message: response.data,
+                status: response.status
             })
             console.log({
-                message: response.data
+                message: response.data,
+                status: response.status
             })
+            
+            return res.status(response.status).json(logs[0])
+
         })
-        .catch(e => {
-            logs.push({
-                message: e.message,
-                // status: e.status
-            })
+        .catch(error => {
+            if(error.response){
+                logs.push(error.response.data);
+                // res.status(error.response.status);
+                return res.status(error.response.status).json(logs[0])
+
+            } else if (error.request) {
+                console.log(error.request);
+                logs.push(error.request);
+                // res.status(error.response.status);
+                return res.status(error.response.status).json(logs[0])
+
+            } else {
+                console.log('Error', error.message);
+                logs.push(error.message);
+                // res.status(error.response.status);
+                return res.status(error.response.status).json(logs[0])
+            }
         })
-    res.set('X-Robots-Tag', 'noindex');
-    return res.status(200).json(logs[0])
+
+
+    // res.set('X-Robots-Tag', 'noindex');
+    // return res.status(??????????????).json(logs)
+    
 }
 
 
