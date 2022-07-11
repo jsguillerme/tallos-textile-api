@@ -1,5 +1,5 @@
 import express from "express";
-// import numeroController from "../controllers/numeroController.js";
+import atualizarCnpj from "../controllers/cpfFormatadoController.js";
 import geraBoleto from "../controllers/geraBoletoController.js";
 
 
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
     .get('/geraBoleto', geraBoleto)
-    // .put("/", numeroController.atualizarNumero)
+    .put("/atualizaCnpj", atualizarCnpj.atualizarCnpj)
 
 
 export default router;
