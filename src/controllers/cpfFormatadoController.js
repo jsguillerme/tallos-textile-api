@@ -1,30 +1,34 @@
 
 function mask(value, pattern){
     let i = 0;
-    const v = value.toString();
-
-    return pattern.replace(/#/g, () => v[i++] || '');
+    // const v = value.toString();
+    return pattern.replace(/#/g, () => value[i++] || '');
 }
 
 class atualizarCnpj {
 
     static atualizarCnpj = (req, res) => {
-
+        
         try {
+            const { cnpj } = req.body
 
-            const cnpj = req.query.cnpj
+            if(!cnpj){
+                return res.status(409).json({error: 'falta o número do CNPJ'})
+            }
 
-            const cnpjFormatado = mask(cnpj, '##.###.###/####-##');
+            if (cnpj.length == 11) {
+                const cpfFormatado = mask(cnpj, '###.###.###-##');
+                res.status(200).send({valorFormatado: cpfFormatado})
+            } else {
+                const cnpjFormatado = mask(cnpj, '##.###.###/####-##');
+                res.status(200).send({valorFormatado: cnpjFormatado})
+            }
 
-            res.status(200).send({CnpjFormatado: cnpjFormatado})
-
-        } catch (error) {
-            
+        } catch (error) {  
             res.status(400).send({message: "Erro"})
         }
         
     }
 }
-
 
 export default atualizarCnpj
