@@ -6,20 +6,25 @@ const geraBoletoController = async (req, res) =>
 {
     const logs = [];
     const token = "ZjegJFyh2S8Ygl2dKwmOG960QSNHMRqW7mUEruGj";
-    const cpfCnpj  = req.query.cpfCnpj;
-    const numero = req.query.numero;
-    let numeroNovo
+    const { numero } = req.body;
+    const { cpfCnpj } = req.body
+    // const numero = req.query.numero;
+    let numeroNovo;
+    let cpfCnpjNovo;
+
+    try {
+        cpfCnpjNovo = (cpfCnpj.replace(/\D/gm, ''));
+        console.log(cpfCnpjNovo)
+
+    } catch (error) {
+        return res.status(400).json({error: 'Não foi possível formatar o Cnpj ou CPF'})
+    }
 
     try{
         numeroNovo = (numero.replace(/[^0-9]/g, "%2F"));
 
     } catch (err) {
-        return res.status(400).json({error: 'falta o número do documento'})
-    }
-    
-
-    if(token != "ZjegJFyh2S8Ygl2dKwmOG960QSNHMRqW7mUEruGj"){
-        return res.status(403).json({error: 'Problema de autenticação, verifique o token'})
+        return res.status(400).json({error: 'Não foi possível formatar o número'});
     }
 
     if(!numero){
@@ -31,21 +36,21 @@ const geraBoletoController = async (req, res) =>
     }
 
     await axios
-        .get(`http://txc.portaldocliente.online/api/data-integration/v1/app/txc/bankbill/company/42548082000153/customer/${cpfCnpj}/document/${numeroNovo}/generate-bankbill`, {
+        .get(`http://txc.portaldocliente.online/api/data-integration/v1/app/txc/bankbill/company/42548082000153/customer/${cpfCnpjNovo}/document/${numeroNovo}/generate-bankbill`, {
             headers: { 'x-api-key': token },
             // params: {'emissao': '10/04/2022'}
         })
         .then(response => {
-            logs.push({
-                message: response.data,
-                status: response.status
-            })
-            console.log({
-                message: response.data,
-                status: response.status
-            })
+            // logs.push({
+            //     message: response.data,
+            //     status: response.status
+            // })
+            // console.log({
+            //     message: response.data,
+            //     status: response.status
+            // })
             
-            return res.status(response.status).json(logs[0])
+            return res.status(response.status).json(response.data)
 
         })
         .catch(error => {
