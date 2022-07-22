@@ -41,16 +41,16 @@ const geraBoletoController = async (req, res) =>
             // params: {'emissao': '10/04/2022'}
         })
         .then(response => {
-            // logs.push({
-            //     message: response.data,
-            //     status: response.status
-            // })
+             logs.push({
+                 message: response.data,
+                 status: response.status
+             })
             // console.log({
             //     message: response.data,
             //     status: response.status
             // })
             
-            return res.status(response.status).json(response.data)
+            return res.status(response.status).json(logs[0])
 
         })
         .catch(error => {
