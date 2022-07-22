@@ -5,6 +5,7 @@ import axios from "axios";
 const geraBoletoController = async (req, res) => 
 {
     const logs = [];
+    let status;
     const token = "ZjegJFyh2S8Ygl2dKwmOG960QSNHMRqW7mUEruGj";
     const { numero } = req.body;
     const { cpfCnpj } = req.body
@@ -40,16 +41,10 @@ const geraBoletoController = async (req, res) =>
             headers: { 'x-api-key': token }
         })
         .then(response => {
-            // logs.push({
-            //     message: response.data,
-            //     status: response.status
-            // })
-            // console.log({
-            //     message: response.data,
-            //     status: response.status
-            // })
+            logs.push(response.data)
+            status = response.status
             
-            return res.status(response.status).send(logs[0])
+            // return res.status(response.status).send(logs[0])
 
         })
         .catch(error => {
@@ -74,7 +69,7 @@ const geraBoletoController = async (req, res) =>
 
 
     // res.set('X-Robots-Tag', 'noindex');
-    // return res.status(??????????????).json(logs)
+    return res.status(status).json(logs)
     
 }
 
