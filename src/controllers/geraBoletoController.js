@@ -68,7 +68,7 @@ const geraBoletoController = async (req, res) =>
 
 
     res.set('X-Robots-Tag', 'noindex');
-    return res.status(status).json(logs)
+    return res.status(status).json(logs[0])
     
 }
 
