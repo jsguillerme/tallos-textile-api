@@ -37,8 +37,7 @@ const geraBoletoController = async (req, res) =>
 
     await axios
         .get(`http://txc.portaldocliente.online/api/data-integration/v1/app/txc/bankbill/company/42548082000153/customer/${cpfCnpjNovo}/document/${numeroNovo}/generate-bankbill`, {
-            headers: { 'x-api-key': token },
-            // params: {'emissao': '10/04/2022'}
+            headers: { 'x-api-key': token }
         })
         .then(response => {
             // logs.push({
@@ -50,7 +49,7 @@ const geraBoletoController = async (req, res) =>
             //     status: response.status
             // })
             
-            return res.status(response.status).json(response.data)
+            return res.status(response.status).send(logs[0])
 
         })
         .catch(error => {
