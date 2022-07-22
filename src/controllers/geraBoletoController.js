@@ -15,7 +15,7 @@ const geraBoletoController = async (req, res) =>
 
     try {
         cpfCnpjNovo = (cpfCnpj.replace(/\D/gm, ''));
-        console.log(cpfCnpjNovo)
+        // console.log(cpfCnpjNovo)
 
     } catch (error) {
         return res.status(400).json({error: 'Não foi possível formatar o Cnpj ou CPF'})
@@ -67,7 +67,7 @@ const geraBoletoController = async (req, res) =>
         })
 
 
-    // res.set('X-Robots-Tag', 'noindex');
+    res.set('X-Robots-Tag', 'noindex');
     return res.status(status).json(logs)
     
 }
