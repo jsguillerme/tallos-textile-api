@@ -57,7 +57,7 @@ const geraBoletoController = async (req, res) =>
             if(error.response){
                 logs.push(error.response.data);
                 // res.status(error.response.status);
-                return res.status(error.response.status).json(logs[0])
+                return res.status(error.response.status).json(logs)
 
             } else if (error.request) {
                 console.log(error.request);
