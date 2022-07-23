@@ -6,7 +6,7 @@ import geraBoleto from "../controllers/geraBoletoController.js";
 const router = express.Router();
 
 router
-    .get('/geraBoleto', geraBoleto)
+    .post('/geraBoleto', geraBoleto)
     .put("/atualizaCnpj", atualizarCnpj.atualizarCnpj)
 
 
